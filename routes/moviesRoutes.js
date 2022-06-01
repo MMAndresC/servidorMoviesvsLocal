@@ -17,8 +17,28 @@ router.get('/',(req,res) =>{ //4 Crear un endpoint get que devuelva todas las pe
     return res.send(movies[movieId]);
 })
 
+const goAwayTildes = (string) => { //Solo sirve para castellano simbolo ´ uno solo por palabra
+    const stringMin = string.toLowerCase();
+    const letters = [
+        { conTilde:'á', sinTilde:'a'},
+        { conTilde:'é', sinTilde:'e'},
+        { conTilde:'í', sinTilde:'i'},
+        { conTilde:'ó', sinTilde:'o'},
+        { conTilde:'ú', sinTilde:'u'}
+    ];
+
+    for (let i = 0; i < 5; i++){
+        let aux = '';
+        aux = stringMin.replace(letters[i].conTilde, letters[i].sinTilde);
+        if(stringMin !== aux){
+            return aux;
+        }
+    }
+    return string;
+}
+
 const searchBy = (criteria,data,res) =>{ 
-    const result = movies.filter(movie => movie[criteria] == data);
+    const result = movies.filter(movie => goAwayTildes(movie[criteria]) == data.toLowerCase());
     if (!!result.length){
         return res.send(result);
     }else{
