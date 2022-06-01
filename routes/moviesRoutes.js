@@ -34,7 +34,7 @@ const goAwayTildes = (string) => { //Solo sirve para castellano simbolo ´ uno s
             return aux;
         }
     }
-    return string;
+    return stringMin;
 }
 
 const searchBy = (criteria,data,res) =>{ 
